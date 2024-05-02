@@ -1,0 +1,69 @@
+
+  <div class="card">
+
+    <p-card>
+
+      <p-table [value]="turns()" styleClass="p-datatable-gridlines"  [tableStyle]="{ 'min-width': '60rem' }">
+
+        <ng-template pTemplate="caption" >
+          <div class="flex align-items-center justify-content-between"  >
+              BarberOs
+              <p-toast />
+              <div class=" justify-content-end">
+                <p-button (click)="showDialog()" icon="pi pi-address-book" label="Agendar"></p-button>
+                <p-dialog [breakpoints]="{ '960px': '75vw' }" header="Agende su turno" [(visible)]="visible" [style]="{ width: '50vw' }">
+
+                  <form [formGroup]="myForm" >
+
+                    <div class="flex py-2 justify-content-center">
+                      <p-dropdown formControlName="service" appendTo="body" [options]="services"  optionLabel="service" [showClear]="true" placeholder="Servicio" ></p-dropdown>
+
+                    </div>
+                    <div class="flex py-2 justify-content-center">
+                      <p-dropdown formControlName="hour" appendTo="body" [options]="hours()"  optionLabel="hour" [showClear]="true" placeholder="Hora"></p-dropdown>
+                    </div>
+                    <div class="flex py-2 justify-content-center">
+                        <input formControlName="name" pInputText placeholder="Nombre" />
+                    </div>
+
+                    <div class="flex py-2 justify-content-center">
+                      <p-confirmDialog></p-confirmDialog>
+
+                      <p-button (click)="confirm1($event)" icon="pi pi-check" label="Confirmar" [disabled]=" !myForm.valid "></p-button>
+                    </div>
+
+                  </form>
+
+
+
+                </p-dialog>
+
+              </div>
+          </div>
+         </ng-template>
+        <ng-template pTemplate="header" let-columns>
+          <tr >
+            <th> Hora </th>
+            <th> Turno </th>
+          </tr>
+        </ng-template>
+        <ng-template pTemplate="body" let-turn let-columns="columns">
+          <tr >
+            <td>{{ turn.hour }}</td>
+            @if (turn.turn) {
+
+              <td> {{ turn.turn.name}} - {{turn.turn.service}} </td>
+            }@else {
+              <td></td>
+            }
+          </tr>
+        </ng-template>
+      </p-table>
+    </p-card>
+
+
+
+
+
+  </div>
+
